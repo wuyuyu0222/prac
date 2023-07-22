@@ -4,7 +4,7 @@ let timeoutId;
 let intervalId;
 
 const CustomInputNumber = (props) => {
-    const { min = Math.min, max = Math.max, step = 1,
+    const { min, max, step = 1,
         name, value: passedValue = 0, onChange: passedOnChange, onBlur: passedOnBlur, disabled } = props;
     const [value, setValue] = useState(passedValue)
     const inputRef = useRef(null)
@@ -55,7 +55,7 @@ const CustomInputNumber = (props) => {
         timeoutId = setTimeout(() => {
             intervalId = setInterval(() => {
                 triggerInputChange(num)
-            }, 300)
+            }, 50)
         }, 300)
     }
 
