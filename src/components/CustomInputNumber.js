@@ -1,14 +1,11 @@
 import React, { useRef, useState } from 'react'
 
-//TODO: onBlur
-//TODO: disabled
-
 let timeoutId;
 let intervalId;
 
 const CustomInputNumber = (props) => {
     const { min = 0, max = 10, step = 1,
-        name, value: passedValue = 0, onChange: passedOnChange, onBlur, disabled } = props;
+        name, value: passedValue = 0, onChange: passedOnChange, onBlur: passedOnBlur, disabled } = props;
     const [value, setValue] = useState(passedValue)
     const inputRef = useRef(null)
 
@@ -30,6 +27,10 @@ const CustomInputNumber = (props) => {
     const onChange = (e) => {
         setValue(+e.target.value)
         passedOnChange?.(e)
+    }
+
+    const onBlur = (e) => {
+        passedOnBlur?.(e)
     }
 
     const triggerInputChange = (num) => {
@@ -80,6 +81,7 @@ const CustomInputNumber = (props) => {
             className='numberInput'
             value={value}
             onChange={(e) => onChange(e)}
+            onBlur={onBlur}
             min={min}
             max={max}
             disabled={disabled}
