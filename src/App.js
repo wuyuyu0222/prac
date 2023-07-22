@@ -1,7 +1,8 @@
 import React from 'react'
+import CustomInputNumber from './components/CustomInputNumber'
 
 const App = () => {
-    return <p>Hello World!</p>
+    return <CustomInputNumber />
 }
 
 export default App
