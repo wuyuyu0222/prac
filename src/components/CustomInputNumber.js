@@ -38,7 +38,7 @@ const CustomInputNumber = (props) => {
 
         const lastValue = +input.value;
         if (!checkIsNumberValid(lastValue, num)) {
-            onBtnUpOrLeave()
+            onBtnMouseUpOrLeave()
             return
         }
 
