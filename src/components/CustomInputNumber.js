@@ -72,7 +72,7 @@ const CustomInputNumber = (props) => {
                 onMouseDown={() => onBtnMouseDown(step * -1)}
                 onMouseUp={onBtnMouseUpOrLeave}
                 onMouseLeave={onBtnMouseUpOrLeave}
-                disabled={disabled || value === min}
+                disabled={disabled || value <= min}
             >-</button>
             <input
                 ref={inputRef}
@@ -91,7 +91,7 @@ const CustomInputNumber = (props) => {
                 onMouseDown={() => onBtnMouseDown(step)}
                 onMouseUp={onBtnMouseUpOrLeave}
                 onMouseLeave={onBtnMouseUpOrLeave}
-                disabled={disabled || value === max}
+                disabled={disabled || value >= max}
             >+</button>
         </div>
     )

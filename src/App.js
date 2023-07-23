@@ -1,8 +1,8 @@
 import React from 'react'
-import CustomInputNumber from './components/CustomInputNumber'
+import RoomAllocation from './components/RoomAllocation'
 
 const App = () => {
-    return <CustomInputNumber />
+    return <RoomAllocation guest={10} room={3} />
 }
 
 export default App
