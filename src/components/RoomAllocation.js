@@ -23,8 +23,8 @@ const DescContainer = styled.div`
 `;
 
 const Desc = styled.span`
-color: #666;
-`
+  color: #666;
+`;
 
 const Divider = styled.hr`
   margin: auto;
@@ -33,23 +33,20 @@ const Divider = styled.hr`
 
 const getUniqueId = () => Math.random().toString(36).substring(2);
 
-const getRoomMap = (room) => {
-  const roomMap = {};
-  for (let i = 0; i < room; i++) {
-    roomMap[getUniqueId()] = { adult: 1, child: 0 };
-  }
-  return roomMap;
-};
-
 const RoomAllocation = (props) => {
   const { guest = 0, room = 0 } = props;
-  const [roomMap, setRoomMap] = useState({});
+  const [roomList, setRoomList] = useState([]);
   const [remainGuest, setRemainGuest] = useState(guest);
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const currentRoomMap = getRoomMap(room);
-    setRoomMap(currentRoomMap);
+    let currentRoomList = Array(room).fill(undefined);
+    currentRoomList = currentRoomList.map((_) => ({
+      id: getUniqueId(),
+      adult: 1,
+      child: 0,
+    }));
+    setRoomList(currentRoomList);
   }, [room]);
 
   useEffect(() => {
@@ -57,13 +54,20 @@ const RoomAllocation = (props) => {
     else setDisabled(false);
   }, [guest, room]);
 
-  const onRoomChange = (id, result) => {
-    roomMap[id] = result;
-    const currentGuest = Object.values(roomMap).reduce((prev, curr) => {
+  useEffect(() => {
+    const currentGuest = roomList.reduce((prev, curr) => {
       const count = curr.adult + curr.child;
       return prev + count;
     }, 0);
     setRemainGuest(guest - currentGuest);
+  }, [guest, roomList, setRemainGuest]);
+
+  const onRoomChange = (id, result) => {
+    setRoomList((prev) => {
+      const roomIndex = prev.findIndex((room) => room.id === id);
+      roomList[roomIndex] = {id, ...result}
+      return [...prev];
+    });
   };
 
   return (
@@ -74,14 +78,14 @@ const RoomAllocation = (props) => {
       <DescContainer>
         <Desc>尚未分配人數：{remainGuest}人</Desc>
       </DescContainer>
-      {Object.keys(roomMap).map((key, index, array) => {
-        if (!key) return null;
+      {roomList.map((room, index, array) => {
+        if (!room) return null;
         return (
-          <div key={key}>
+          <div key={room.id}>
             <Room
               limit={4}
               remainGuest={remainGuest}
-              onChange={(result) => onRoomChange(key, result)}
+              onChange={(result) => onRoomChange(room.id, result)}
               disabled={disabled}
             />
             {index !== array.length - 1 ? <Divider /> : null}
