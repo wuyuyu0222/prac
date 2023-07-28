@@ -63,7 +63,7 @@ const Room = (props) => {
         />
       </Section>
       <Section>
-        <span>小孩</span>
+        <Desc>小孩</Desc>
         <CustomInputNumber
           value={child}
           onChange={onChildChange}

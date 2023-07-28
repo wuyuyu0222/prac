@@ -47,7 +47,7 @@ const RoomAllocation = (props) => {
       child: 0,
     }));
     setRoomList(currentRoomList);
-  }, [room]);
+  }, [room, setRoomList]);
 
   useEffect(() => {
     if (guest === room) setDisabled(true);
