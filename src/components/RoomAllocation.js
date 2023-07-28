@@ -32,6 +32,7 @@ const Divider = styled.hr`
 `;
 
 const getUniqueId = () => Math.random().toString(36).substring(2);
+const ROOM_LIMIT = 4
 
 const RoomAllocation = (props) => {
   const { guest = 0, room = 0 } = props;
@@ -83,7 +84,7 @@ const RoomAllocation = (props) => {
         return (
           <div key={room.id}>
             <Room
-              limit={4}
+              limit={ROOM_LIMIT}
               remainGuest={remainGuest}
               onChange={(result) => onRoomChange(room.id, result)}
               disabled={disabled}
